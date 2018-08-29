@@ -12,9 +12,10 @@ class TypeTableSeeder extends Seeder
     public function run()
     {
         $types = [
-            ['type'=>'Bob'],
-            ['type'=>'Marc'],
-            ['type'=>'Fred'],
+            ['type'=>'Pop'],
+            ['type'=>'Rock'],
+            ['type'=>'Hip Hop'],
+            ['type'=>'Blues'],
         ];
 
         foreach ($types as $type) {
