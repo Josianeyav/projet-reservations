@@ -2,23 +2,27 @@
 
 namespace App\Http\Controllers;
 
-use App\Role;
+use App\Locality;
+use App\Location;
 use Illuminate\Http\Request;
 
-class RoleController extends Controller
+class LocationController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $roles = Role::all();
-        return view('role.index',[
-            'roles' => $roles,
-            'resource' =>'roles',
-        ]);
+        $locations = Location::all();
+        if ($this->wantsJson($request)) {
+            return response()->json($locations);
+        } else {
+            return view('locations.index',[
+                'locations' => $locations,
+            ]);
+        }
     }
 
     /**
@@ -28,7 +32,6 @@ class RoleController extends Controller
      */
     public function create()
     {
-        //
     }
 
     /**
@@ -48,9 +51,14 @@ class RoleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id, Request $request)
     {
-        //
+        $location = Location::findOrFail($id);
+        if ($this->wantsJson($request)) {
+            return response()->json($location);
+        } else {
+            return view('location.show', compact('location'));
+        }
     }
 
     /**
