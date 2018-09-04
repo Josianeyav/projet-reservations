@@ -20,6 +20,10 @@ class ReservationController extends Controller
      */
     public function index(Request $request)
     {
+
+        if (!Auth::check()) {
+            abort(403);
+        }
         $user = Auth::user();
         if ($user->isAdmin()) {
             $reservations = Reservation::all();

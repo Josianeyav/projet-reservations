@@ -15,9 +15,7 @@ class CollaborationController extends Controller
 {
     public function editForShow($id) {
 
-        if (!Auth::check() || !Auth::user()->isAdmin()) {
-            abort(403);
-        }
+        $this->checkIsAdmin();
 
 
         $show = Show::find($id);
@@ -30,9 +28,7 @@ class CollaborationController extends Controller
 
     public function addCollaboration($id)
     {
-        if (!Auth::check() || !Auth::user()->isAdmin()) {
-            abort(403);
-        }
+        $this->checkIsAdmin();
 
         $artistTypes = ArtisteType::all();
         return view('collaboration.addCollaboration', [
@@ -51,9 +47,7 @@ class CollaborationController extends Controller
      */
     public function store(Request $request)
     {
-        if (!Auth::check() || !Auth::user()->isAdmin()) {
-            abort(403);
-        }
+        $this->checkIsAdmin();
 
 
         $showID = $request->input('showID');
@@ -85,9 +79,7 @@ class CollaborationController extends Controller
      */
     public function update(Request $request, $id)
     {
-        if (!Auth::check() || !Auth::user()->isAdmin()) {
-            abort(403);
-        }
+        $this->checkIsAdmin();
 
 
         $requestData = $request->all();
@@ -107,13 +99,13 @@ class CollaborationController extends Controller
      */
     public function destroy($id)
     {
-        if (!Auth::check() || !Auth::user()->isAdmin()) {
-            abort(403);
-        }
+        $this->checkIsAdmin();
 
         $showID = Collaboration::find($id)->show->firstOrFail()->id;
         Collaboration::destroy($id);
 
         return redirect()->route('collaboration.editForShow', $showID)->with('status', 'Collaboration supprimée!');
     }
+
+
 }

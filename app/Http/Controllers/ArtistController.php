@@ -3,11 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests;
-use App\Http\Controllers\Controller;
 
 use App\Artist;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class ArtistController extends Controller
 {
@@ -33,9 +31,7 @@ class ArtistController extends Controller
      */
     public function create()
     {
-        if (!Auth::check() || !Auth::user()->isAdmin()) {
-            abort(403);
-        }
+        $this->checkIsAdmin();
 
         return view('artist.create');
     }
@@ -49,9 +45,7 @@ class ArtistController extends Controller
      */
     public function store(Request $request)
     {
-        if (!Auth::check() || !Auth::user()->isAdmin()) {
-            abort(403);
-        }
+        $this->checkIsAdmin();
 
         $requestData = $request->all();
         Artist::create($requestData);
@@ -102,9 +96,7 @@ class ArtistController extends Controller
      */
     public function update(Request $request, $id)
     {
-        if (!Auth::check() || !Auth::user()->isAdmin()) {
-            abort(403);
-        }
+        $this->checkIsAdmin();
 
         $requestData = $request->all();
 
@@ -127,9 +119,7 @@ class ArtistController extends Controller
      */
     public function destroy($id, Request $request)
     {
-        if (!Auth::check() || !Auth::user()->isAdmin()) {
-            abort(403);
-        }
+        $this->checkIsAdmin();
         Artist::destroy($id);
 
         if ($this->wantsJson($request)) {

@@ -27,9 +27,22 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('reservation.index') }}">Réservations</a>
                 </li>
+
+                @if(Auth::user()->isAdmin())
+                    <li class="nav-item">
+                        <a class="nav-link" href=" {{ route('localities.index') }}">Localités</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href=" {{ route('locations.index') }}">Localisations</a>
+                    </li>
+                @endif
+
                 <li class="nav-item">
                     <a class="nav-link" href=" {{ route('user.edit') }}">Mon Profil</a>
                 </li>
+
+
                 <li class="nav-item">
                     <a class="btn btn-outline-success" style="margin-top: 5px;" href="{{ route('logout') }}"
                        style="margin-left: 10px;"

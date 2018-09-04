@@ -4,11 +4,13 @@
     {!! $errors->first('title', '<p class="help-block">:message</p>') !!}
 </div>
 
+@if ($formMode === 'edit')
 <div class="form-group {{ $errors->has('slug') ? 'has-error' : ''}}">
     <label class="control-label">{{ 'Slug' }}</label>
     <input class="form-control" name="slug" type="text" required value="{{ $show->slug or ''}}" >
     {!! $errors->first('slug', '<p class="help-block">:message</p>') !!}
 </div>
+@endif
 
 <div class="form-group {{ $errors->has('price') ? 'has-error' : ''}}">
     <label class="control-label">{{ 'Prix' }}</label>
@@ -39,7 +41,7 @@
     </select>
 </div>
 <div class="form-group">
-    <label for="places" class="control-label">{{ 'Location' }}</label>
+    <label for="places" class="control-label">{{ 'Localisation' }}</label>
     <select required class="form-control" name="location_id" >
         @foreach($locations as $location)
             <option value="{{ $location->id }}"

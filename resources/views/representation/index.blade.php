@@ -5,7 +5,7 @@
         <div class="row">
             @include('admin.sidebar')
 
-            <div class="col-md-9">
+            <div class="col-12">
                 <div class="card">
                     <div class="card-header">Représentation</div>
                     <div class="card-body">
@@ -25,8 +25,8 @@
                                 <tr>
                                     <th>#</th>
                                     <th>Date</th>
-                                    <th>Référence</th>
                                     <th>Spectacle</th>
+                                    <th>Localisation</th>
                                     @if(Auth::check() && Auth::user()->isAdmin())
                                         <th>Actions</th>
                                     @endif
@@ -38,13 +38,22 @@
                                 <tbody>
                                 @foreach($representation as $item)
                                     <tr>
-                                        <?php $show = $item->show()->firstOrFail()?>
+                                        <?php
+                                        $show = $item->show()->firstOrFail();
+                                        $location = $item->location()->first()
+                                        ?>
                                         <td>{{ $loop->iteration or $item->id }}</td>
                                         <td>{{ $item->beautifulSchedule() }}</td>
-                                        <td>{{ $item->ref }}</td>
                                         <td>
                                             <a href="{{ route('shows.show', $show) }}">
                                                 {{ title_case($show->title) }}
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <a href="{{ route('locations.show', $location) }}">
+                                                @if ($location)
+                                                    {{ title_case($location->designation) }}
+                                                @endif
                                             </a>
                                         </td>
                                         @if(Auth::check() && Auth::user()->isAdmin())

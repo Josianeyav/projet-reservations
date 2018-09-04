@@ -213,11 +213,4 @@ class ShowController extends Controller
             return redirect()->route('shows.index')->with('status', 'Veuillez ajouter un fichier!');
         }
     }
-
-    private function checkIsAdmin()
-    {
-        if (!Auth::check() || !Auth::user()->isAdmin()) {
-            abort(403);
-        }
-    }
 }
