@@ -1,5 +1,6 @@
 <?php
 
+use App\Artist;
 use Illuminate\Database\Seeder;
 
 class ArtistsTableSeeder extends Seeder
@@ -11,15 +12,13 @@ class ArtistsTableSeeder extends Seeder
      */
     public function run()
     {
-        $artists = [['firstname'=>'Bob','lastname'=>'Sull'],
-            ['firstname'=>'Marc','lastname'=>'Flynn'],
-            ['firstname'=>'Fred','lastname'=>'Durand'],
+        $artists = [
+            ['firstname' => 'Bob', 'lastname' => 'Sull'],
+            ['firstname' => 'Marc', 'lastname' => 'Flynn'],
+            ['firstname' => 'Fred', 'lastname' => 'Durand'],
         ];
-        foreach ($artists as $a) {
-            DB::table('artists')->insert([
-                'firstname' => $a['firstname'],
-                'lastname' => $a['lastname'],
-            ]);
+        foreach ($artists as $artist) {
+            Artist::create($artist);
         }
     }
 }
