@@ -1,0 +1,34 @@
+{
+  "fields": [
+    {
+      "name": "places",
+      "type": "integer"
+    }
+  ],
+  "foreign_keys": [
+    {
+      "column": "representation_id",
+      "references": "id",
+      "on": "representations",
+      "onDelete": "cascade"
+    },
+    {
+      "column": "user_id",
+      "references": "id",
+      "on": "users",
+      "onDelete": "cascade"
+    }
+  ],
+  "relationships": [
+    {
+      "name": "user",
+      "type": "belongsTo",
+      "class": "App\\User"
+    },
+    {
+      "name": "representation",
+      "type": "belongsTo",
+      "class": "App\\Representation"
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "fields" : [
+    {
+      "name": "bidon",
+      "type": "string"
+    }
+  ],
+  "foreign_keys": [
+    {
+      "column": "artist_type_id",
+      "references": "id",
+      "on": "artist_types",
+      "onDelete": "cascade"
+    },
+    {
+      "column": "show_id",
+      "references": "id",
+      "on": "shows",
+      "onDelete": "cascade"
+    }
+  ],
+  "relationships": [
+    {
+      "name": "artist",
+      "type": "belongsTo",
+      "class": "App\\ArtistType"
+    },
+    {
+      "name": "show",
+      "type": "belongsTo",
+      "class": "App\\Show"
+    }
+  ]
+}

@@ -11,11 +11,51 @@
 |
 */
 
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
+
+
+Route::resource('artist', 'ArtistController');
+Route::get('locality', 'LocalityController@index');
+
+Route::resource('representation', 'RepresentationController');
+Auth::routes();
+
+Route::get('/user', 'UserController@edit')
+    ->middleware('auth')
+    ->name('user.edit');
+Route::post('/user/{id}', 'UserController@update')
+    ->middleware('auth')
+    ->name('user.update');
+
+Route::resource('reservation', 'ReservationController');
+Route::resource('shows', 'ShowController');
+Route::resource('location', 'LocationController');
+
+
+Route::resource('artist-type', 'ArtisteTypeController');
+Route::get('artist-type/editForArtist/{id}', 'ArtisteTypeController@editForArtist')
+    ->name('artistType.editForArtist');
+Route::get('artist-type/addArtistType/{id}', 'ArtisteTypeController@addArtistType')
+    ->name('artistType.addArtistType');
+
+Route::resource('collaboration', 'CollaborationController');
+Route::get('collaboration/editForShow/{id}', 'CollaborationController@editForShow')
+    ->name('collaboration.editForShow');
+Route::get('collaboration/addCollaboration/{id}', 'CollaborationController@addCollaboration')
+    ->name('collaboration.addCollaboration');
+
+
+// Ajouter routes pour RSS
+Route::feeds('feeds');
+
+Route::get('exportCSV', 'ShowController@exportCSV')
+    ->name('shows.exportCSV');
+Route::post('importCSV', 'ShowController@importCSV')
+    ->name('shows.importCSV');
+
+
 Route::get('/', function () {
-    return view('welcome');
+    return redirect('shows');
 });
 
-Route::get('artist', 'ArtistController@index');
-Route::get('type', 'TypeController@index');
-Route::get('role', 'RoleController@index');
-Route::get('locality', 'LocalityController@index');

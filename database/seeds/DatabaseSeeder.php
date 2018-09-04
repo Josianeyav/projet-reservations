@@ -15,7 +15,14 @@ class DatabaseSeeder extends Seeder
             ArtistsTableSeeder::class,
             TypeTableSeeder::class,
             RoleTableSeeder::class,
-            LocalityTableSeeder::class
+            LocalityTableSeeder::class,
+            LocationsTableSeeder::class,
+            ShowTableSeeder::class,
+            RepresentationTableSeeder::class,
+            ArtistTypeTableSeeder::class,
+            CollaborationSeeder::class,
+            UsersTableSeeder::class,
+            ReservationsTableSeeder::class
         ]);
     }
 }
