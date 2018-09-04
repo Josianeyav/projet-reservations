@@ -16,7 +16,6 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::resource('artist', 'ArtistController');
-Route::get('locality', 'LocalityController@index');
 
 Route::resource('representation', 'RepresentationController');
 Auth::routes();
@@ -59,3 +58,6 @@ Route::get('/', function () {
     return redirect('shows');
 });
 
+
+Route::resource('localities', 'LocalityController');
+Route::resource('locations', 'LocationController');
