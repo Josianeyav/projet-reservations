@@ -1,0 +1,36 @@
+header a#login {
+    margin-right: 10px;
+    background-color: lightgreen;
+    border-color: green;
+    color: darkgreen;
+}
+
+header form#frmSearch {
+    margin-right: 30px;
+}
+
+footer {
+    border-top: 1px solid #dee2e6 !important;
+    padding: 0 15px;
+    text-align: center;
+}
+
+.greenButton {
+    margin-right: 10px;
+    background-color: lightgreen;
+    border-color: green;
+    color: darkgreen;
+}
+
+.error-message {
+    color: red;
+    font-size: 0.8rem;
+}
+
+.error-message.normal-size {
+    font-size: 1.0rem;
+}
+
+i.fas {
+    display: inline-block !important;
+}
