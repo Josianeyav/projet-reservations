@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Role;
 use App\User;
 use App\Http\Controllers\Controller;
+use Illuminate\Auth\Events\Registered;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 
@@ -27,7 +30,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/login';
 
     /**
      * Create a new controller instance.
@@ -40,32 +43,71 @@ class RegisterController extends Controller
     }
 
     /**
+     * Handle a registration request for the application.
+     * We override so that the user isn't logged in after registration.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\Response
+     */
+    public function register(Request $request)
+    {
+        $this->validator($request->all())->validate();
+
+        event(new Registered($user = $this->create($request->all())));
+
+        return $this->registered($request, $user) ?: redirect($this->redirectPath());
+    }
+
+
+    /**
      * Get a validator for an incoming registration request.
      *
-     * @param  array  $data
+     * @param  array $data
      * @return \Illuminate\Contracts\Validation\Validator
      */
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => 'required|string|max:255',
+            'login' => 'required|string|max:255|unique:users',
+            'firstname' => 'required|string|max:255',
+            'lastname' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:6|confirmed',
+            'password' => [
+                'required',
+                'string',
+                'min:6',
+                function ($attribute, $pass, $fail) {
+
+                    if (!preg_match("/[A-Z]/", $pass)) {
+                        return $fail($attribute . ' doit contenir une majuscule.');
+                    }
+
+                    if (!preg_match("/\W/", $pass)) {
+                        return $fail($attribute . ' doit contenir un charactère spécial.');
+                    }
+                }],
+            'passwordConfirm' => 'required|same:password',
+            'langue' => 'required|string|max:2',
         ]);
     }
 
     /**
      * Create a new user instance after a valid registration.
      *
-     * @param  array  $data
+     * @param  array $data
      * @return \App\User
      */
     protected function create(array $data)
     {
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => bcrypt($data['password']),
-        ]);
+        $user = new User;
+        $user->email = $data['email'];
+        $user->login = $data['login'];
+        $user->firstname = $data['firstname'];
+        $user->lastname = $data['lastname'];
+        $user->password = bcrypt($data['password']);
+        $user->langue = $data['langue'];
+        $user->role()->associate(Role::where('role', 'membre')->firstOrFail());
+        $user->save();
+        return $user;
     }
 }

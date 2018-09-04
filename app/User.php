@@ -15,7 +15,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'login', 'firstname', 'lastname', 'email', 'password', 'langue', 'role_id'
     ];
 
     /**
@@ -26,4 +26,32 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    /**
+     * Indicates if the model should be timestamped.
+     *
+     * @var bool
+     */
+    public $timestamps = false;
+
+    /**
+     * The database table used by the model.
+     *
+     * @var string
+     */
+    protected $table = 'users';
+
+    public function role()
+    {
+        return $this->belongsTo('App\Role');
+    }
+
+    public function reservations()
+    {
+        return $this->hasMany('App\Reservation');
+    }
+
+    public function isAdmin() {
+        return $this->role()->firstOrFail()->role == "admin";
+    }
 }
