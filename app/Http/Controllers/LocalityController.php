@@ -12,13 +12,18 @@ class LocalityController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+
         $localities = Locality::all();
-        return view('locality.index',[
-            'localities' => $localities,
-            'resource' =>'localities',
-        ]);
+        if ($this->wantsJson($request)) {
+            return response()->json($localities);
+        } else {
+            return view('locality.index', [
+                'localities' => $localities,
+                'resource' => 'localities',
+            ]);
+        }
     }
 
     /**
